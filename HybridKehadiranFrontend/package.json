@@ -1,6 +1,6 @@
 {
-  "name": "your-app",
-  "version": "0.1.0",
+  "name": "HybridKehadiranFrontend",
+  "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
     "electron": "^1.6.11"
