@@ -1,6 +1,11 @@
 // Empty JS for your own code to be here
 "use strict";
 // window.onload = function () { alert("It's loaded!") };
+document.getElementById("reset_button").onclick = function() {
+  var alertMessage = "Status: " + "OK" + "\n" +
+                    "Pesan: " + "Input dan data dihapus. ";
+  alert(alertMessage);
+}
 document.getElementById("submit_button").onclick = function() {
   // Defining the variable
   var id_karyawan = ""
@@ -29,8 +34,27 @@ document.getElementById("submit_button").onclick = function() {
               "bulan=" + bulan + "&" +
               "usr_pass=" + usr_password;
   xmlHttp.onreadystatechange = function() {
-      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        console.log("xmlHttp.responseText", xmlHttp.responseText);
+        console.log(JSON.parse(xmlHttp.responseText).data == "");
+        if (JSON.parse(xmlHttp.responseText).data == "") {
+          var alertMessage = "Status: " + JSON.parse(xmlHttp.responseText).status + "\n" +
+                          "Pesan: " + JSON.parse(xmlHttp.responseText).message;
+          alert(alertMessage);
+        } else {
           callback(xmlHttp.responseText);
+        }
+      } else if (xmlHttp.readyState == 4 && xmlHttp.status == 0) {
+        console.log(xmlHttp.readyState, xmlHttp.status);
+        var alertMessage = "Status: " + "error" + "\n" +
+                          "Pesan: " + "Gagal menghubungi server API.  Hubungi administrator. ";
+        alert(alertMessage);
+      } else if (xmlHttp.readyState == 4) {
+        console.log(xmlHttp.readyState, xmlHttp.status);
+        var alertMessage = "Status: " + "error" + "\n" +
+                          "Pesan: " + "Gagal menghubungi server API.  Hubungi administrator. ";
+        alert(alertMessage);
+      }
   }
   xmlHttp.open("GET", url + query, true); // true for asynchronous
   xmlHttp.send(null);
